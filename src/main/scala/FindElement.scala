@@ -12,6 +12,7 @@ import scala.annotation.tailrec
 
 object FindElement  extends App {
 
+  @tailrec
   def nth[A] (num: Int, nums: List[A] ) : A = {
     num match {
       //This case will return head if num=0
@@ -26,8 +27,8 @@ object FindElement  extends App {
   /**
    * Function Name: last
    * Purpose: This function accepts list and returns last element of list.
-   * @param input
-   * @tparam A
+   * @param input accepts list
+   * @tparam A generic type
    * @return last element of list
    */
   @tailrec
@@ -40,9 +41,9 @@ object FindElement  extends App {
   /**
    * Function Name: calculate_length
    * Purpose: This function accepts list and accumulator and returns length of list.
-   * @param input
-   * @param calc_length
-   * @tparam A
+   * @param input accepts list
+   * @param calc_length Accumulator
+   * @tparam A Generic parameter
    * @return length of a list
    */
   @tailrec
@@ -52,6 +53,19 @@ object FindElement  extends App {
         case x :: xs => calculate_length(xs, 1+ calc_length)
       }
     }
+
+  /** Flatten a nested list structure.
+   *
+   * @param input possibly nested list
+   * @return flattened list
+   */
+  def flatten(input: List[Any]): List[Any] = input match {
+    case Nil => Nil
+    case x :: xs => x match {
+      case y: List[_] => y ++ flatten(xs)
+      case _ => x :: flatten(xs)
+    }
+  }
 
   val results = nth[Char](1, List('a', 'b', 'c', 'd') )
 
